@@ -1,4 +1,4 @@
-# import sys
+import sys
 #
 # a = sys.argv
 # print(a)
@@ -15,14 +15,39 @@
 #     else:
 #         str1 = ' '.join(a[2:])
 #     print(str1)
+task_description = sys.argv
 
-
-def find_task():
-    find_str = []
+def read_list():
+    list = []
     with open('todo.txt', 'r') as m:
-        find_str = m.readlines()
+        list = m.read().splitlines()
         for line in m:
-            find_str = line.strip('')
-        # print(find_str)
-        print(find_str[3])
-find_task()
+            list = line.strip('')
+        print(list)
+        return list
+
+def done_task(list):
+    x = int(task_description[1]) #поменять в [] на +1
+    a = list[x]
+    done_str = a.replace(a, 'x ' + a, 1)
+    with open('todo.txt', 'w') as m:
+        list.append(done_str)
+        c = list.remove(a)
+        m.write('\n'.join(list))
+    # print(done_str)
+
+# def remove_task(list):
+#     read_list()
+#     if task_description[1] == 'remove':
+#         x = int(task_description[2])
+#         remove_str = list.remove[x] # поменять в [] на +1
+#     print(list)
+
+
+
+list = read_list()
+done_task(list)
+# remove_task(list)
+
+
+# find_str = find_str.insert(0, 'x')
