@@ -29,10 +29,12 @@ def read_list():
 def done_task(list):
     x = int(task_description[1]) #поменять в [] на +1
     a = list[x]
+    done_str = list.pop(x)
+    print(done_str)
     done_str = a.replace(a, 'x ' + a, 1)
     with open('todo.txt', 'w') as m:
         list.append(done_str)
-        c = list.remove(a)
+        # c = list.remove(a)
         m.write('\n'.join(list))
     # print(done_str)
 
