@@ -1,7 +1,7 @@
 import sys
 from datetime import date
 
-from to_do import add_task, read_alltask, read_addtask, find_task, done_task
+from to_do import add_task, read_alltask, read_addtask, read_list, done_task, task_list
 
 task_description = sys.argv
 
@@ -13,8 +13,8 @@ elif task_description[1] == 'all':
     print(read_alltask())
 
 elif task_description[1] == 'done':
-    a, b, c = find_task()
-    done_task(a, b, c)
+    read_list()
+    done_task(task_list)
 
 
 # elif task_description[1] == 'remove':

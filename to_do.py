@@ -8,12 +8,12 @@ task_description = sys.argv
 #     due = date(year, month, day)
 #     return str(due)
 def read_list(): #читает список
-    list = []
+    task_list = []
     with open('todo.txt', 'r') as m:
-        list = m.readlines()
+        task_list = m.read().splitlines()
         for line in m:
-            list = line.strip('')
-        return list
+            task_list = line.strip('')
+        return task_list
 
 def add_task():
     with open('todo.txt', 'a') as f: #, encoding='utf-8'
@@ -60,15 +60,16 @@ def find_task(): #находит стороку по номеру
         find_str.insert(0,'x')
         print(find_str[x])
 
-def done_task(find_num, index, value):# меняет стороку с заданым номером
-    with open('todo.txt', 'a') as m:
-        if int(task_description[2]) == int(index):
-            index = str(index)
-            result = find_num.replace(index,'x', 1) #(_,_,1) где 1 это порядок вхождения символа в строк
-        m.write(result)
-        print(result)
+def done_task(task_list):
+    x = int(task_description[2])
+    done_str = task_list.pop(x - 1) # -1 потому что иначе со второй строки читает
+    print(done_str)
+    done_str = done_str.replace(done_str, 'x ' + done_str, 1)
+    with open('todo.txt', 'w') as m:
+        task_list.append(done_str)
+        m.write('\n'.join(task_list))
 
-list = read_list()
+task_list = read_list()
 
 
 
