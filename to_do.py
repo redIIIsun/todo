@@ -45,7 +45,6 @@ def read_addtask():
            print(f'{d} {i}', end='\n')
        print(d+1,input_task[-1],'- Добавлено', end = '\n')
 
-
 # def print_notes(task_list, tasks, note, linenum):
 #     with open('todo.txt', 'r') as m:
 #        task_list =  m.read().splitlines()
@@ -96,13 +95,9 @@ def done_task(task_list):
 
 def remove_task(task_list):
     x = int(task_description[2])
-    if x in task_list:
-        remove_str = task_list.pop(x - 1)
-        print(remove_str)
+    remove_str = task_list.pop(x - 1)
     with open('todo.txt', 'w') as m:
         m.write('\n'.join(task_list))
-
-
 
 def edit_task(task_list):
     x = int(task_description[2])
@@ -119,7 +114,7 @@ def add_due():
     x = int(task_description[2])
     add_strdue = task_list[x - 1]
     print(add_strdue)
-    date_entry = input('Введите дату в формате г.м.д.(н-р: 2017.7.23) - ', )
+    date_entry = input('Введите дату завершения в формате г.м.д.(н-р: 2017.7.23) - ', )
     year, month, day = map(int, date_entry.split('.'))
     date_entry = date(year, month, day)
     with open('todo.txt', 'w') as m:
