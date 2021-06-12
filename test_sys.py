@@ -1,4 +1,5 @@
 import sys
+from to_do import read_list, task_list
 #
 # a = sys.argv
 # print(a)
@@ -17,36 +18,39 @@ import sys
 #     print(str1)
 task_description = sys.argv
 
-def read_list():
-    list = []
-    with open('todo.txt', 'r') as m:
-        list = m.read().splitlines()
-        for line in m:
-            list = line.strip('')
-        return list
-
-def done_task(list):
-    x = int(task_description[1]) #поменять в [] на +1
-    done_str = list.pop(x)
-    print(done_str)
-    done_str = done_str.replace(done_str, 'x ' + done_str, 1)
-    with open('todo.txt', 'w') as m:
-        list.append(done_str)
-        m.write('\n'.join(list))
+# def read_list():
+#     list = []
+#     with open('todo.txt', 'r') as m:
+#         list = m.read().splitlines()
+#         for line in m:
+#             list = line.strip('')
+#         return list
+#
+# def done_task(list):
+#     x = int(task_description[1]) #поменять в [] на +1
+#     done_str = list.pop(x)
+#     print(done_str)
+#     done_str = done_str.replace(done_str, 'x ' + done_str, 1)
+#     with open('todo.txt', 'w') as m:
+#         list.append(done_str)
+#         m.write('\n'.join(list))
 
 
 # def remove_task(list):
 #     read_list()
 #     if task_description[1] == 'remove':
 #         x = int(task_description[2])
-#         remove_str = list.remove[x] # поменять в [] на +1
-#     print(list)
+#         print(type(list))
+#         # remove_str = list.pop(x) # поменять в [] на +1
+#         # print(remove_str)
 
 
-
-list = read_list()
-done_task(list)
+#
+# list = read_list()
+# done_task(list)
 # remove_task(list)
+
+task_list = read_list()
 
 
 # find_str = find_str.insert(0, 'x')
