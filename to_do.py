@@ -95,7 +95,15 @@ def done_task(task_list):
 
 def remove_task(task_list):
     x = int(task_description[2])
-    remove_str = task_list.pop(x - 1)
+    remove_str = task_list[x-1]
+    print(f'{x}:{remove_str}')
+    print(f'Вы хотите удалить задачу {x}? (y/n)')
+    a = input()
+    if a == 'y':
+        remove_str = task_list.pop(x - 1)
+        print('ЗАДАЧА УДАЛЕНА')
+    else:
+        print('ЗАДАЧА НЕ УДАЛЕНА')
     with open('todo.txt', 'w') as m:
         m.write('\n'.join(task_list))
 
@@ -120,6 +128,24 @@ def add_due():
     with open('todo.txt', 'w') as m:
         task_list[x - 1] = (f'{add_strdue} due:{date_entry}')
         m.write('\n'.join(task_list))
+
+def undo_task():
+    x = int(task_description[2])
+    undo_str = task_list[x - 1]
+    if 'x' in undo_str:
+        new_str = undo_str.replace('x','',1)
+    with open('todo.txt', 'w') as m:
+        task_list[x - 1] = f'{new_str[1:]}'
+        m.write('\n'.join(task_list))
+        print(new_str[1:], 'ВОССТАНОВЛЕНО')
+
+def search_task():
+    task = task_description[2]
+    for i in task_list:
+        if task in i:
+            print(i)
+
+
 
 
 

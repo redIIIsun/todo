@@ -1,7 +1,7 @@
 import sys
 from datetime import date
 
-from to_do import add_task, read_alltask, read_addtask, read_list, done_task, task_list, remove_task, edit_task, add_due
+from to_do import add_task, read_alltask, read_addtask, read_list, done_task, task_list, remove_task, edit_task, add_due, undo_task, search_task
 
 
 task_description = sys.argv
@@ -25,12 +25,17 @@ elif task_description[1] == 'due':
     read_list()
     add_due()
 
-
-
 elif task_description[1] == 'done':
     read_list()
     done_task(task_list)
 
+elif task_description[1] == 'undo':
+    read_list()
+    undo_task()
+
+elif task_description[1] == 'search':
+    read_list()
+    search_task()
 # if task_description[0] == 'todo.txt.py':
 #     print('Показать не завершенные, но это еще нужно придумать', read_task())
 
