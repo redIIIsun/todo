@@ -10,7 +10,7 @@
 
 # def todo_task(find_num, index, value):#тут в () по хорошему должен вызываться список find_task
 #     with open('todo.txt', 'a') as m:
-#         if int(task_description[2]) == int(index):
+#         if int(note[2]) == int(index):
 #             index = str(index)
 #             result = find_num.replace(index,'x', 1)
 #     with open('todo.txt', 'a') as f:

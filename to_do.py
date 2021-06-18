@@ -1,7 +1,7 @@
 import sys
 from datetime import date
 task_description = sys.argv
-# task = str(input('Запланировать задачу: '))
+# note = str(input('Запланировать задачу: '))
 # def due_task():
 #     date_entry = input('Введите дату (н-р: 2017,7,1) - ', ) #убрать и сделать через sys add или еще что то
 #     year, month, day = map(int, date_entry.split(','))
@@ -55,7 +55,7 @@ def read_addtask():
 
 def note_task(linenum, task, note):
     task_list = read_list()
-    # linenum = int(task_description[2])
+    # linenum = int(task_deskription[2])
     task = task_list[linenum - 1]
     # note = task_deskription[1]  # как то связать с коммандами из строки ввода подписи
     print(f'{linenum}: {task} {note}')
@@ -76,7 +76,7 @@ def note_task(linenum, task, note):
 #         find_str = m.readlines()
 #         for line in m:
 #             find_str = line.strip('')
-#         x = int(task_description[2])
+#         x = int(note[2])
 #         find_str.insert(0,'x')
 #         print(find_str[x])
 
@@ -144,7 +144,7 @@ def search_task():
 
 
 task_list = read_list()
-print('_____Magic_____')
+# print('_____Magic_____')
 
 
 
