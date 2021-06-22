@@ -54,7 +54,7 @@ task_deskription = sys.argv
 # remove_task(list)
 
 
-def read_task():
+def print_task():
     task_list = read_list()
     task_list = sorted(task_list, reverse=False)
     print('\nTODO:', '\n_____________________')
@@ -80,10 +80,8 @@ def note_task(linenum, task, note):
         # key = 'x'
         # if key not in unf_task:
         #     # print(unf_task)
-    if task_deskription[1] == 'add':
-        note = '- ДОБАВЛЕНО'
-        print(f'{linenum}: {task} {note}', end='\n')
-    elif task_deskription[1] == 'done':
+
+    if task_deskription[1] == 'done':
         note = '- ЗАВЕРШЕНО'
         print(f'{linenum}: {task} {note}', end='\n')
     elif task_deskription[1] == 'due':
@@ -96,7 +94,7 @@ def note_task(linenum, task, note):
             note = '- ИЗМЕНЕНО'
             print(f'{linenum}: {task} {note}', end='\n')
 
-read_task()
+print_task()
 
 # res = datetime.strptime('%Y-%m-%dT')
 # print(res)
