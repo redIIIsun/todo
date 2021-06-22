@@ -1,4 +1,7 @@
 import sys
+
+# import dateutil.parser
+# from datetime import datetime
 from to_do import read_list, task_list
 #
 # a = sys.argv
@@ -58,7 +61,7 @@ def read_task():
     linenum = int(task_deskription[2])
     task = task_list.pop(linenum - 1)
     note = task_deskription[1]
-    # note_task(linenum, task, note)  # как ее вставить что бы она на место возвращала строку???
+    note_task(linenum, task, note)  # как ее вставить что бы она на место возвращала строку???
     for index, task in enumerate(task_list, 1):
         unf_task = f'{index}: {task}'
         # print(unf_task)
@@ -67,8 +70,16 @@ def read_task():
             print(unf_task)
     note_task(linenum, task, note)
 
-
 def note_task(linenum, task, note):
+    task_list = read_list()
+    task_list = sorted(task_list, reverse=False)
+    # print('\nTODO:', '\n_____________________')
+    # for index, task in enumerate(task_list, 1):
+        # unf_task = f'{index}: {task}'
+        # # print(unf_task)
+        # key = 'x'
+        # if key not in unf_task:
+        #     # print(unf_task)
     if task_deskription[1] == 'add':
         note = '- ДОБАВЛЕНО'
         print(f'{linenum}: {task} {note}', end='\n')
@@ -79,15 +90,16 @@ def note_task(linenum, task, note):
         note = '- ИЗМЕНЕН СРОК'
         print(f'{linenum}: {task} {note}', end='\n')
     elif task_deskription[1] == 'undo':
-        note = '- ВОССТАНОВЛЕНО'
-        print(f'{linenum}: {task} {note}', end='\n')
+            note = '- ВОССТАНОВЛЕНО'
+            print(f'{linenum}: {task} {note}', end='\n')
     elif task_deskription[1] == 'edit':
-        note = '- ИЗМЕНЕНО'
-        print(f'{linenum}: {task} {note}', end='\n')
-
+            note = '- ИЗМЕНЕНО'
+            print(f'{linenum}: {task} {note}', end='\n')
 
 read_task()
 
+# res = datetime.strptime('%Y-%m-%dT')
+# print(res)
 
 task_list = read_list()
 

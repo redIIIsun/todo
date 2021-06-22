@@ -43,10 +43,12 @@ def UnfinishedTask(): # чтение всех невыполненых зада�
         if key not in all_tasks:
             print(all_tasks)
 
+
 def read_addtask():
     task_list = read_list() #еще раз прочитывает глобальную переменную после исполнения файла
+    task_list = sorted(task_list, reverse=False)
     print('\nTODO:', '\n_____________________')
-    # print('\n'.join(task_list[:-1]))
+    # # print('\n'.join(task_list[:-1]))
     linenum = len(task_list)
     note = '- ДОБАВЛЕННО'
     for index, task in enumerate(task_list[:-1], 1):
@@ -55,9 +57,9 @@ def read_addtask():
 
 def note_task(linenum, task, note):
     task_list = read_list()
-    # linenum = int(task_deskription[2])
+    linenum = int(task_deskription[2])
     task = task_list[linenum - 1]
-    # note = task_deskription[1]  # как то связать с коммандами из строки ввода подписи
+    note = ' - ЧТО_ТО ДОПИСАТЬ'#task_deskription[1]  # как то связать с коммандами из строки ввода подписи
     print(f'{linenum}: {task} {note}')
 
 
@@ -84,7 +86,7 @@ def done_task(task_list):
     linenum = int(task_description[2])
     done_str = task_list.pop(linenum - 1)  # -1 потому что иначе со второй строки читает
     print(done_str)
-    done_str = done_str.replace(done_str, 'linenum ' + done_str, 1)
+    done_str = done_str.replace(done_str, 'x ' + done_str, 1)
     with open('todo.txt', 'w') as m:
         task_list.append(done_str)
         m.write('\n'.join(task_list))

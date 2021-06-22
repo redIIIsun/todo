@@ -1,7 +1,7 @@
 import sys
 from datetime import date
 
-from to_do import add_task, read_alltask, read_addtask, read_list, done_task, task_list, remove_task, edit_task, add_due, undo_task, search_task, note_task
+from to_do import add_task, read_alltask, read_addtask, read_list, done_task, task_list, remove_task, edit_task, add_due, undo_task, search_task, note_task, UnfinishedTask
 
 
 task_description = sys.argv
@@ -37,6 +37,8 @@ elif task_description[1] == 'undo':
 elif task_description[1] == 'search':
     read_list()
     search_task()
+elif task_description[1] == 'unf':
+    note_task()
 
 
 # if note[0] == 'todo.txt.py':
