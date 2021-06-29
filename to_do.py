@@ -68,25 +68,27 @@ def edit_task(task_list): # редактирование задачи по вв�
         m.write('\n'.join(task_list)) # добавить вывод печати файла
         print('\n'.join(task_list))
 
-def date_input():
-    date_entry = input('Введите дату в формате YYYY-MM-DD : ', )
-    year, month, day = map(int, date_entry.split('-'))
-    date_in = date(year, month, day)
-    return date_in
+def date_input(date_entry):
+    while True:
+        try:
+            year, month, day = map(int, date_entry.split('-'))
+            date_in = date(year, month, day)
+            return date_in
+        except ValueError as error:
+            print('Внимание!!!! введите дату через - ','\n')
+            date_entry = input('Введите дату в формате YYYY-MM-DD : ', )
 
-try:
-    date_input()
-except ValueError as error:
-    print('Внимание!!!! введите дату через - ','\n')
 
 
 def add_due(): # добавить дату окончания к задаче по номеру
     linenum = int(task_description[2])
     task = task_list[linenum - 1]
     print(task)
-    date_entry = date_input()
+    date_entry = task_description[3]
+    date_in = date_input(date_entry)
+
     with open('todo.txt', 'w') as m:
-        task_list[linenum - 1] = (f'{task} due:{date_entry}')
+        task_list[linenum - 1] = (f'{task} due:{date_in}')
         m.write('\n'.join(task_list))
 
 def undo_task(): # снять отметку о выполнении в задаче по номеру
