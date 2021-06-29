@@ -1,16 +1,9 @@
 import sys
-from datetime import date
+from datetime import datetime, date
+
 task_description = sys.argv
-# note = str(input('Запланировать задачу: '))
-# def due_task():
-#     date_entry = input('Введите дату (н-р: 2017,7,1) - ', ) #убрать и сделать через sys add или еще что то
-#     year, month, day = map(int, date_entry.split(','))
-#     due = date(year, month, day)
-#     return str(due)
-# def read_file():
-#     with open('todo.txt', 'r') as m:
-#        input_task =  m.read().splitlines()
-def read_list(): #читает список
+
+def read_list(): #читает список из файла
     task_list = []
     with open('todo.txt', 'r') as m:
         task_list = m.read().splitlines()
@@ -18,22 +11,100 @@ def read_list(): #читает список
             task_list = line.strip('')
         return task_list
 
-def add_task():
+def add_task(): # ввод задачи в файл
     with open('todo.txt', 'a') as m: #, encoding='utf-8'
         today = date.today().strftime('%Y-%m-%d') #запись в виде строки
         task = ' '.join(task_description[1:])
-        rec_task = m.write(f'{today} {task[4:]} \n')
-        return rec_task # можно было бы через f.seek() перенести курсор в начало,
+        task = task[4:]
+        m.write(f'{today} {task.capitalize()} \n')
+        index = len(read_list())+1
+        print(f'{index}: {today} {task.capitalize()} - ДОБАВЛЕННО' )
+        # return rec_task # можно было бы через f.seek() перенести курсор в начало,
         # но тогда при методе 'a' все удалится при последующей записи, что делать??????
 
-def read_alltask(task_list):
+def read_alltask(task_list): # выводит все задачи в файле
     all_tasks = sorted(task_list, reverse=False)
     print('\nTODO:', '\n_____________________')
     for index, task in enumerate(all_tasks, 1):
         print(f'{index}: {task}')
 
+def done_task(): # задача по введеному номеру завершена
+    linenum = int(task_description[2])
+    task = task_list.pop(linenum - 1)  # -1 потому что иначе со второй строки читает
+    print(task)
+    task = task.replace(task, 'x ' + task, 1)
+    print_task()
+    with open('todo.txt', 'w') as m:
+        task_list.append(task)
+        m.write('\n'.join(task_list))
 
-def UnfinishedTask(): # чтение всех невыполненых заданий
+
+
+def remove_task(task_list): # удаление или нет задачи по введеному номеру
+    linenum = int(task_description[2])
+    task = task_list[linenum-1]
+    print(f'{linenum}:{task}')
+    print(f'Вы хотите удалить задачу {linenum}? (y/n)')
+    a = input()
+    if a.lower() == 'y':
+        task = task_list.pop(linenum - 1)
+        print('ЗАДАЧА УДАЛЕНА')
+    elif a.lower() == 'n':
+        print('ЗАДАЧА НЕ УДАЛЕНА')
+    with open('todo.txt', 'w') as m:
+        m.write('\n'.join(task_list))
+    
+
+def edit_task(task_list): # редактирование задачи по введеному номеру
+    linenum = int(task_description[2])
+    task = task_list[linenum - 1] # поиск по вхождению в список
+    date_start = task[:11]
+    variable_str = task[11:] # срез строки что б без даты
+    new_str = ' '.join(task_description[3:])
+    # variable_str = task.replace(variable_str, new_str, 1)
+    with open('todo.txt', 'w') as m:
+        task_list[linenum - 1] = (f'{date_start}{new_str}')
+
+        m.write('\n'.join(task_list)) # добавить вывод печати файла
+        print('\n'.join(task_list))
+
+def date_input():
+    date_entry = input('Введите дату в формате YYYY-MM-DD : ', )
+    year, month, day = map(int, date_entry.split('-'))
+    date_in = date(year, month, day)
+    return date_in
+
+try:
+    date_input()
+except ValueError as error:
+    print('Внимание!!!! введите дату через - ','\n')
+
+
+def add_due(): # добавить дату окончания к задаче по номеру
+    linenum = int(task_description[2])
+    task = task_list[linenum - 1]
+    print(task)
+    date_entry = date_input()
+    with open('todo.txt', 'w') as m:
+        task_list[linenum - 1] = (f'{task} due:{date_entry}')
+        m.write('\n'.join(task_list))
+
+def undo_task(): # снять отметку о выполнении в задаче по номеру
+    linenum = int(task_description[2])
+    task = task_list[linenum - 1]
+    if 'linenum' in task:
+        new_str = task.replace('linenum','',1)
+    with open('todo.txt', 'w') as m:
+        task_list[linenum - 1] = f'{new_str[1:]}'
+        m.write('\n'.join(task_list))
+        print(new_str[1:], 'ВОССТАНОВЛЕНО')
+
+def search_task(): # поиск задачи по ключевому слову
+    task = task_description[2]
+    for i in task_list:
+        if task in i:
+            print(i)
+def un_finished_task(): # чтение всех невыполненых заданий
     all_tasks = sorted(task_list, reverse=False)
     print('\nTODO:', '\n_____________________')
     for index, task in enumerate(all_tasks, 1):
@@ -42,107 +113,44 @@ def UnfinishedTask(): # чтение всех невыполненых зада�
         key = 'x'
         if key not in all_tasks:
             print(all_tasks)
-
-
-def read_addtask():
-    task_list = read_list() #еще раз прочитывает глобальную переменную после исполнения файла
+            
+def print_task(): # вывод на экран невыполненых задач с пояснением к изменению
+    task_list = read_list()
     task_list = sorted(task_list, reverse=False)
     print('\nTODO:', '\n_____________________')
-    # # print('\n'.join(task_list[:-1]))
-    linenum = len(task_list)
-    note = '- ДОБАВЛЕННО'
-    for index, task in enumerate(task_list[:-1], 1):
-        print(f'{index}: {task}')
-    note_task(linenum, task, note)
-
-def note_task(linenum, task, note):
-    task_list = read_list()
     linenum = int(task_deskription[2])
-    task = task_list[linenum - 1]
-    note = ' - ЧТО_ТО ДОПИСАТЬ'#task_deskription[1]  # как то связать с коммандами из строки ввода подписи
-    print(f'{linenum}: {task} {note}')
+    task = task_list.pop(linenum - 1)
+    note = task_deskription[1]
+    for index, task in enumerate(task_list, 1):
+        note_in = ''
+        if linenum == index:
+            note_in = note
+        key = 'x'
+        if key not in task:
+            note_task(index, task, note_in)
 
 
-# def find_task():
-#     find_str = []
-#     with open('todo.txt', 'r') as m:
-#         find_str = m.readlines()
-#         for line in m:
-#             find_str = line.strip('')
-#         # print(find_str)
-#         print(find_str[3])
-# find_task()
+def note_task(linenum, task, note_in): # пояснение к изменению
+    note = ''
+    if note_in == 'done':
+        note = '- ЗАВЕРШЕНО'
+    elif note_in == 'due':
+        note = '- ИЗМЕНЕН СРОК'
+    elif note_in == 'undo':
+        note = '- ВОССТАНОВЛЕНО'
+    elif note_in == 'edit':
+        note = '- ИЗМЕНЕНО'
+    print(f'{linenum}: {task} {note}', end='\n')
 
-# def find_task(): #находит стороку по номеру
-#     with open('todo.txt', 'r') as m:
-#         find_str = m.readlines()
-#         for line in m:
-#             find_str = line.strip('')
-#         x = int(note[2])
-#         find_str.insert(0,'x')
-#         print(find_str[x])
-
-def done_task(task_list):
-    linenum = int(task_description[2])
-    done_str = task_list.pop(linenum - 1)  # -1 потому что иначе со второй строки читает
-    print(done_str)
-    done_str = done_str.replace(done_str, 'x ' + done_str, 1)
-    with open('todo.txt', 'w') as m:
-        task_list.append(done_str)
-        m.write('\n'.join(task_list))
-
-def remove_task(task_list):
-    linenum = int(task_description[2])
-    remove_str = task_list[linenum-1]
-    print(f'{linenum}:{remove_str}')
-    print(f'Вы хотите удалить задачу {linenum}? (y/n)')
-    a = input()
-    if a == 'y':
-        remove_str = task_list.pop(linenum - 1)
-        print('ЗАДАЧА УДАЛЕНА')
-    else:
-        print('ЗАДАЧА НЕ УДАЛЕНА')
-    with open('todo.txt', 'w') as m:
-        m.write('\n'.join(task_list))
-
-def edit_task(task_list):
-    linenum = int(task_description[2])
-    edit_str = task_list[linenum - 1] # поиск по вхождению в список
-    date_start = edit_str[:11]
-    variable_str = edit_str[11:] # срез строки что б без даты
-    new_str = ' '.join(task_description[3:])
-    # variable_str = edit_str.replace(variable_str, new_str, 1)
-    with open('todo.txt', 'w') as m:
-        task_list[linenum - 1] = (f'{date_start}{new_str}')
-        m.write('\n'.join(task_list)) # добавить вывод печати файла
-
-def add_due():
-    linenum = int(task_description[2])
-    add_due = task_list[linenum - 1]
-    print(add_due)
-    date_entry = input('Введите дату завершения в формате г.м.д.(н-р: 2017.7.23) - ', )
-    year, month, day = map(int, date_entry.split('.'))
-    date_entry = date(year, month, day)
-    with open('todo.txt', 'w') as m:
-        task_list[linenum - 1] = (f'{add_due} due:{date_entry}')
-        m.write('\n'.join(task_list))
-
-def undo_task():
-    linenum = int(task_description[2])
-    undo_str = task_list[linenum - 1]
-    if 'linenum' in undo_str:
-        new_str = undo_str.replace('linenum','',1)
-    with open('todo.txt', 'w') as m:
-        task_list[linenum - 1] = f'{new_str[1:]}'
-        m.write('\n'.join(task_list))
-        print(new_str[1:], 'ВОССТАНОВЛЕНО')
-
-def search_task():
-    task = task_description[2]
-    for i in task_list:
-        if task in i:
-            print(i)
-            
+# def find_date_between():
+#     task_description[3] = date_one
+#     date_one = date_input()
+#     task_description[4] = date_two
+#     date_two = date_input()
+#       while date_one <= i <= date_two:
+#         for i in task_list:
+#
+#             print(i)
 
 
 task_list = read_list()

@@ -18,15 +18,25 @@
 #         print(result)
 
 #про методы строк можно подробно посотереть тут https://pythonru.com/osnovy/stroki-python
-def add_due():
-    linenum = int(task_description[2])
-    add_due = task_list[linenum - 1]
-    print(add_due)
-    date_entry = input('Введите дату завершения в формате г.м.д.(н-р: 2017.7.23) - ', )
-    date_format = '%d-%m-%Y'
-    date_entry = datetime.strptime(date_entry, date_format)
-    # year, month, day = map(int, date_entry.split('.'))
-    # date_entry = date(year, month, day)
-    with open('todo.txt', 'w') as m:
-        task_list[linenum - 1] = (f'{add_due} due:{date_entry}')
-        m.write('\n'.join(task_list))
+# import sys
+from datetime import date
+
+# def date_input():
+#     date_entry = input('Введите дату в формате YYYY-MM-DD : ', )
+#     year, month, day = map(int, date_entry.split('-'))
+#     date = datetime.date(year, month, day)
+#     return date
+#
+# try:
+#     date_input()
+# except ValueError as error:
+#     print('Введите дату через - ')
+#
+#
+# x = date_input()
+# print(x)
+
+first_date = date(input('date: ',))
+second_date = date(input('date: ',))
+delta = second_date - first_date
+print(delta)
