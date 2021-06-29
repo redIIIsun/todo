@@ -16,11 +16,15 @@ def add_task(): # ввод задачи в файл
         today = date.today().strftime('%Y-%m-%d') #запись в виде строки
         task = ' '.join(task_description[1:])
         task = task[4:]
+        print(task)
         m.write(f'{today} {task.capitalize()} \n')
         index = len(read_list())+1
-        print(f'{index}: {today} {task.capitalize()} - ДОБАВЛЕННО' )
-        # return rec_task # можно было бы через f.seek() перенести курсор в начало,
-        # но тогда при методе 'a' все удалится при последующей записи, что делать??????
+        task = '\n'.join(task_list)
+        print(f'{index}: {task}' ) #?????
+        print(f'{index}: {today} {task.capitalize()}- ДОБАВЛЕННО')
+        # index = linenum
+        # note = '- ДОБАВЛЕННО'
+
 
 def read_alltask(task_list): # выводит все задачи в файле
     all_tasks = sorted(task_list, reverse=False)
@@ -28,19 +32,19 @@ def read_alltask(task_list): # выводит все задачи в файле
     for index, task in enumerate(all_tasks, 1):
         print(f'{index}: {task}')
 
-def done_task(): # задача по введеному номеру завершена
+def done_task(): # задача по введеному номеру строки завершена
     linenum = int(task_description[2])
     task = task_list.pop(linenum - 1)  # -1 потому что иначе со второй строки читает
     print(task)
     task = task.replace(task, 'x ' + task, 1)
-    print_task()
     with open('todo.txt', 'w') as m:
         task_list.append(task)
         m.write('\n'.join(task_list))
+    note = '- ЗАВЕРШЕНО'
+    print_task(linenum, task, note)
 
 
-
-def remove_task(task_list): # удаление или нет задачи по введеному номеру
+def remove_task(task_list): # удаление или нет задачи по введеному номеру строки
     linenum = int(task_description[2])
     task = task_list[linenum-1]
     print(f'{linenum}:{task}')
@@ -54,8 +58,7 @@ def remove_task(task_list): # удаление или нет задачи по �
     with open('todo.txt', 'w') as m:
         m.write('\n'.join(task_list))
     
-
-def edit_task(task_list): # редактирование задачи по введеному номеру
+def edit_task(task_list): # редактирование задачи по введеному номеру строки
     linenum = int(task_description[2])
     task = task_list[linenum - 1] # поиск по вхождению в список
     date_start = task[:11]
@@ -66,7 +69,10 @@ def edit_task(task_list): # редактирование задачи по вв�
         task_list[linenum - 1] = (f'{date_start}{new_str}')
 
         m.write('\n'.join(task_list)) # добавить вывод печати файла
-        print('\n'.join(task_list))
+        # print('\n'.join(task_list))
+    note = '- ИЗМЕНЕНО'
+    print_task(linenum, task, note)
+
 
 def date_input(date_entry):
     while True:
@@ -78,9 +84,7 @@ def date_input(date_entry):
             print('Внимание!!!! введите дату через - ','\n')
             date_entry = input('Введите дату в формате YYYY-MM-DD : ', )
 
-
-
-def add_due(): # добавить дату окончания к задаче по номеру
+def add_due(): # добавить дату окончания к задаче по номеру строки
     linenum = int(task_description[2])
     task = task_list[linenum - 1]
     print(task)
@@ -90,22 +94,27 @@ def add_due(): # добавить дату окончания к задаче п
     with open('todo.txt', 'w') as m:
         task_list[linenum - 1] = (f'{task} due:{date_in}')
         m.write('\n'.join(task_list))
+    note = '- ИЗМЕНЕН СРОК'
+    print_task(linenum, task, note)
 
 def undo_task(): # снять отметку о выполнении в задаче по номеру
     linenum = int(task_description[2])
     task = task_list[linenum - 1]
-    if 'linenum' in task:
-        new_str = task.replace('linenum','',1)
+    if 'x ' in task:
+        new_str = task.replace('x','',1)
+        print(new_str)
     with open('todo.txt', 'w') as m:
         task_list[linenum - 1] = f'{new_str[1:]}'
         m.write('\n'.join(task_list))
-        print(new_str[1:], 'ВОССТАНОВЛЕНО')
+    note = 'ВОССТАНОВЛЕНО'
+    print_task(linenum, task, note)
 
 def search_task(): # поиск задачи по ключевому слову
     task = task_description[2]
     for i in task_list:
         if task in i:
             print(i)
+
 def un_finished_task(): # чтение всех невыполненых заданий
     all_tasks = sorted(task_list, reverse=False)
     print('\nTODO:', '\n_____________________')
@@ -116,33 +125,23 @@ def un_finished_task(): # чтение всех невыполненых зад�
         if key not in all_tasks:
             print(all_tasks)
             
-def print_task(): # вывод на экран невыполненых задач с пояснением к изменению
+def print_task(linenum, task, note): # вывод на экран невыполненых задач с пояснением к изменению
     task_list = read_list()
-    task_list = sorted(task_list, reverse=False)
+    task_list = sorted(task_list, reverse = False)
     print('\nTODO:', '\n_____________________')
-    linenum = int(task_deskription[2])
-    task = task_list.pop(linenum - 1)
-    note = task_deskription[1]
+    # linenum = int(task_deskription[2])
+    # task = task_list.pop(linenum - 1)
+    # note = task_deskription[1]
     for index, task in enumerate(task_list, 1):
-        note_in = ''
+        # note = ''
         if linenum == index:
-            note_in = note
+            note = ''
         key = 'x'
         if key not in task:
-            note_task(index, task, note_in)
+            print(f'{linenum}: {task} {note}', end='\n')
 
 
-def note_task(linenum, task, note_in): # пояснение к изменению
-    note = ''
-    if note_in == 'done':
-        note = '- ЗАВЕРШЕНО'
-    elif note_in == 'due':
-        note = '- ИЗМЕНЕН СРОК'
-    elif note_in == 'undo':
-        note = '- ВОССТАНОВЛЕНО'
-    elif note_in == 'edit':
-        note = '- ИЗМЕНЕНО'
-    print(f'{linenum}: {task} {note}', end='\n')
+
 
 # def find_date_between():
 #     task_description[3] = date_one

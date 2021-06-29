@@ -3,7 +3,7 @@ from datetime import datetime, date
 
 from to_do import add_task, read_alltask, print_task, read_list,\
     done_task,task_list, remove_task, edit_task, add_due,\
-    undo_task, search_task, note_task, un_finished_task #,find_date_between #, date_input ,
+    undo_task, search_task, print_task, un_finished_task #,find_date_between #, date_input ,
 
 
 task_description = sys.argv
@@ -14,7 +14,6 @@ if len(task_description) == 1:
 else:
     if task_description[1] == 'add':
         read_list()
-        print_task()
         add_task()
 
     elif task_description[1] == 'all':
@@ -24,27 +23,21 @@ else:
         read_list()
         remove_task(task_list)
 
-
     elif task_description[1] == 'edit':
         read_list()
         edit_task(task_list)
 
-
     elif task_description[1] == 'due':
         read_list()
         add_due()
-        print_task()
-
 
     elif task_description[1] == 'done':
         read_list()
         done_task()
 
-
     elif task_description[1] == 'undo':
         read_list()
         undo_task()
-
 
     elif task_description[1] == 'search':
         read_list()
@@ -57,7 +50,6 @@ else:
     #
 
 
-# if note[0] == 'todo.txt.py':
-#     print('Показать не завершенные, но это еще нужно придумать', read_task())
+
 
 # # C:\WINDOWS\system32>python C:\PyCharm\PythonHomeWorkKazan\todo.txt\todo.txt.py
