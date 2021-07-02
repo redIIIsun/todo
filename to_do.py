@@ -16,14 +16,11 @@ def add_task(): # ввод задачи в файл
         today = date.today().strftime('%Y-%m-%d') #запись в виде строки
         task = ' '.join(task_description[1:])
         task = task[4:]
-        print(task)
         m.write(f'{today} {task.capitalize()} \n')
-        index = len(read_list())+1
+        linenum = len(read_list())+1
         task = '\n'.join(task_list)
-        print(f'{index}: {task}'  ) #?????
-        print(f'{index}: {today} {task.capitalize()}- ДОБАВЛЕННО')
-        # index = linenum
-        # note = '- ДОБАВЛЕННО'
+        note = '- ДОБАВЛЕННО'
+    print_task(linenum, task, note)
 
 
 def read_alltask(task_list): # выводит все задачи в файле
