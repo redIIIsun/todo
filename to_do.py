@@ -108,9 +108,9 @@ def undo_task(): # снять отметку о выполнении в зада
 
 def search_task(): # поиск задачи по ключевому слову
     task = task_description[2]
-    for i in task_list:
-        if task in i:
-            print(i)
+    for index, tasks in enumerate(task_list, 1):
+        if task in tasks:
+            print(f'{index}: {tasks}')
 
 def un_finished_task(): # чтение всех невыполненых заданий
     all_tasks = sorted(task_list, reverse=False)

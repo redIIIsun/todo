@@ -42,7 +42,7 @@ else:
     elif task_description[1] == 'search':
         read_list()
         search_task()
-        print_task()
+
 
     # elif task_description[1] == 'created':
     #     read_list()
