@@ -20,7 +20,7 @@ def add_task(): # ввод задачи в файл
         m.write(f'{today} {task.capitalize()} \n')
         index = len(read_list())+1
         task = '\n'.join(task_list)
-        print(f'{index}: {task}' ) #?????
+        print(f'{index}: {task}'  ) #?????
         print(f'{index}: {today} {task.capitalize()}- ДОБАВЛЕННО')
         # index = linenum
         # note = '- ДОБАВЛЕННО'
@@ -127,18 +127,16 @@ def un_finished_task(): # чтение всех невыполненых зад�
             
 def print_task(linenum, task, note): # вывод на экран невыполненых задач с пояснением к изменению
     task_list = read_list()
-    task_list = sorted(task_list, reverse = False)
+    # task_list = sorted(task_list, reverse = False)
     print('\nTODO:', '\n_____________________')
-    # linenum = int(task_deskription[2])
-    # task = task_list.pop(linenum - 1)
-    # note = task_deskription[1]
     for index, task in enumerate(task_list, 1):
-        # note = ''
         if linenum == index:
-            note = ''
-        key = 'x'
-        if key not in task:
             print(f'{linenum}: {task} {note}', end='\n')
+        else:
+            if 'x' in task:
+                continue
+            print(f'{index}: {task}')
+
 
 
 
