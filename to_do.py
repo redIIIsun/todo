@@ -22,13 +22,6 @@ def add_task(): # ввод задачи в файл
         note = '- ДОБАВЛЕННО'
     print_task(linenum, task, note)
 
-
-def read_alltask(task_list): # выводит все задачи в файле
-    all_tasks = sorted(task_list, reverse=False)
-    print('\nTODO:', '\n_____________________')
-    for index, task in enumerate(all_tasks, 1):
-        print(f'{index}: {task}')
-
 def done_task(): # задача по введеному номеру строки завершена
     linenum = int(task_description[2])
     task = task_list.pop(linenum - 1)  # -1 потому что иначе со второй строки читает
@@ -38,7 +31,17 @@ def done_task(): # задача по введеному номеру строк�
         task_list.append(task)
         m.write('\n'.join(task_list))
     note = '- ЗАВЕРШЕНО'
-    print_task(linenum, task, note)
+    read_alltask(linenum, task, note)
+
+def read_alltask(linenum, task, note): # выводит все задачи в файле
+    task_list = read_list()
+    all_tasks = sorted(task_list, reverse=False)
+    print('\nTODO:', '\n_____________________')
+    for index, task in enumerate(all_tasks, 1):
+        if linenum == index:
+            print(f'{linenum}: {task} {note}', end='\n')
+        else:
+            print(f'{index}: {task}')
 
 
 def remove_task(task_list): # удаление или нет задачи по введеному номеру строки
@@ -69,7 +72,6 @@ def edit_task(task_list): # редактирование задачи по вв�
         # print('\n'.join(task_list))
     note = '- ИЗМЕНЕНО'
     print_task(linenum, task, note)
-
 
 def date_input(date_entry):
     while True:
@@ -113,24 +115,20 @@ def search_task(): # поиск задачи по ключевому слову
             print(f'{index}: {tasks}')
 
 def un_finished_task(): # чтение всех невыполненых заданий
-    all_tasks = sorted(task_list, reverse=False)
     print('\nTODO:', '\n_____________________')
-    for index, task in enumerate(all_tasks, 1):
+    for index, task in enumerate(read_list(), 1):
         all_tasks = f'{index}: {task}'
-        # дальше кусочек который нужно добавить что бы выводил только невыполненые
-        key = 'x'
-        if key not in all_tasks:
+        if 'x' not in task[0]:
             print(all_tasks)
             
 def print_task(linenum, task, note): # вывод на экран невыполненых задач с пояснением к изменению
     task_list = read_list()
-    # task_list = sorted(task_list, reverse = False)
     print('\nTODO:', '\n_____________________')
     for index, task in enumerate(task_list, 1):
         if linenum == index:
             print(f'{linenum}: {task} {note}', end='\n')
         else:
-            if 'x' in task:
+            if 'x' in task[0] :
                 continue
             print(f'{index}: {task}')
 
@@ -138,21 +136,20 @@ def print_task(linenum, task, note): # вывод на экран невыпол
 
 
 
-# def find_date_between():
-#     task_description[3] = date_one
-#     date_one = date_input()
-#     task_description[4] = date_two
-#     date_two = date_input()
-#       while date_one <= i <= date_two:
-#         for i in task_list:
-#
-#             print(i)
+
+def find_date_between():
+    date_entry = task_description[2]
+    date_one = date_input(date_entry)
+    print(date_one)
+    date_entry = task_description[3]
+    date_two = date_input(date_entry)
+    print(date_two)
+    for task in task_list:
+        if str(date_one) in task:
+            print(task)
 
 
 task_list = read_list()
-# print('_____Magic_____')
-
-
 
 
 

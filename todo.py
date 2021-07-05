@@ -1,9 +1,9 @@
 import sys
 from datetime import datetime, date
 
-from to_do import add_task, read_alltask, print_task, read_list,\
-    done_task,task_list, remove_task, edit_task, add_due,\
-    undo_task, search_task, print_task, un_finished_task #,find_date_between #, date_input ,
+from to_do import add_task, read_alltask, read_list,\
+    done_task, task_list, remove_task, edit_task, add_due,\
+    undo_task, search_task, print_task, un_finished_task ,find_date_between #, date_input ,
 
 
 task_description = sys.argv
@@ -17,7 +17,7 @@ else:
         add_task()
 
     elif task_description[1] == 'all':
-        read_alltask(task_list)
+        read_alltask()
 
     elif task_description[1] == 'remove':
         read_list()
@@ -44,10 +44,10 @@ else:
         search_task()
 
 
-    # elif task_description[1] == 'created':
-    #     read_list()
-    #     find_date_between()
-    #
+    elif task_description[1] == 'created':
+        read_list()
+        find_date_between()
+
 
 
 
