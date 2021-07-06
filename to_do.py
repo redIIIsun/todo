@@ -133,20 +133,17 @@ def print_task(linenum, task, note): # вывод на экран невыпол
             print(f'{index}: {task}')
 
 
-
-
-
-
 def find_date_between():
     date_entry = task_description[2]
     date_one = date_input(date_entry)
-    print(date_one)
     date_entry = task_description[3]
     date_two = date_input(date_entry)
-    print(date_two)
     for task in task_list:
-        if str(date_one) in task:
-            print(task)
+        if task[0:10] in task and task[0] != 'x':
+            date_entry = task[0:10]
+            date_find = datetime.strptime(date_entry, "%Y-%m-%d").date()
+            if date_find >= date_one and date_find <= date_two:
+                print(date_find)
 
 
 task_list = read_list()
