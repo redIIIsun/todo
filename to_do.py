@@ -138,12 +138,14 @@ def find_date_between():
     date_one = date_input(date_entry)
     date_entry = task_description[3]
     date_two = date_input(date_entry)
-    for task in task_list:
+    for index, task in enumerate(task_list, 1):
         if task[0:10] in task and task[0] != 'x':
             date_entry = task[0:10]
             date_find = datetime.strptime(date_entry, "%Y-%m-%d").date()
             if date_find >= date_one and date_find <= date_two:
-                print(date_find)
+                # for index, task in enumerate(all_tasks, 1):
+                if str(date_find) in task:
+                    print(f'{index}: {task}')
 
 
 task_list = read_list()
