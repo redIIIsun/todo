@@ -1,9 +1,10 @@
 import sys
-from datetime import datetime, date
+# from datetime import datetime, date
 
 from to_do import add_task, read_alltask, read_list,\
     done_task, task_list, remove_task, edit_task, add_due,\
-    undo_task, search_task, print_task, un_finished_task ,find_date_between #, date_input ,
+    undo_task, search_task, un_finished_task, find_date_between, find_date_before,\
+    find_date_after, find_due_between, find_due_before, find_due_after
 
 
 task_description = sys.argv
@@ -44,12 +45,25 @@ else:
         search_task()
 
 
-    elif task_description[1] == 'created':
+    elif task_description[1] == 'created' and task_description[2] == 'between':
         read_list()
         find_date_between()
 
+    elif task_description[1] == 'created' and task_description[2] == 'before':
+        read_list()
+        find_date_before()
 
+    elif task_description[1] == 'created' and task_description[2] == 'after':
+        read_list()
+        find_date_after()
 
+    elif task_description[1] == 'between' and task_description[2] == 'due':
+        read_list()
+        find_due_between()
 
-
-# # C:\WINDOWS\system32>python C:\PyCharm\PythonHomeWorkKazan\todo.txt\todo.txt.py
+    elif task_description[1] == 'before' and task_description[2] =='due':
+        read_list()
+        find_due_before()
+    elif task_description[1] == 'after' and task_description[2] == 'due':
+        read_list()
+        find_due_after()

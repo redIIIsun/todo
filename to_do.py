@@ -134,9 +134,9 @@ def print_task(linenum, task, note): # вывод на экран невыпол
 
 
 def find_date_between():
-    date_entry = task_description[2]
-    date_one = date_input(date_entry)
     date_entry = task_description[3]
+    date_one = date_input(date_entry)
+    date_entry = task_description[4]
     date_two = date_input(date_entry)
     for index, task in enumerate(task_list, 1):
         if task[0:10] in task and task[0] != 'x':
@@ -146,6 +146,62 @@ def find_date_between():
                 # for index, task in enumerate(all_tasks, 1):
                 if str(date_find) in task:
                     print(f'{index}: {task}')
+
+def find_date_before():
+    date_entry = task_description[3]
+    date_one = date_input(date_entry)
+    for index, task in enumerate(task_list, 1):
+        if task[0:10] in task and task[0] != 'x':
+            date_entry = task[0:10]
+            date_find = datetime.strptime(date_entry, "%Y-%m-%d").date()
+            if date_find <= date_one:
+                print(f'{index}: {task}')
+
+def find_date_after():
+    date_entry = task_description[3]
+    date_one = date_input(date_entry)
+    for index, task in enumerate(task_list, 1):
+        if task[0:10] in task and task[0] != 'x':
+            date_entry = task[0:10]
+            date_find = datetime.strptime(date_entry, "%Y-%m-%d").date()
+            if date_find >= date_one:
+                print(f'{index}: {task}')
+
+def find_due_between():
+    date_entry = task_description[3]
+    date_one = date_input(date_entry)
+    date_entry = task_description[4]
+    date_two = date_input(date_entry)
+    for index, task in enumerate(task_list, 1):
+        if 'due' in task and task[0] != 'x':
+            due_entry = task[-10:]
+            date_find = datetime.strptime(due_entry, "%Y-%m-%d").date()
+            if date_find >= date_one and date_find <= date_two:
+                if str(date_find) in task:
+                    print(f'{index}: {task}')
+
+def find_due_before():
+    date_entry = task_description[3]
+    date_one = date_input(date_entry)
+    for index, task in enumerate(task_list, 1):
+        if 'due' in task and task[0] != 'x':
+            due_entry = task[-10:]
+            date_find = datetime.strptime(due_entry, "%Y-%m-%d").date()
+            if date_find <= date_one:
+                if str(date_find) in task:
+                    print(f'{index}: {task}')
+
+def find_due_after():
+    date_entry = task_description[3]
+    date_one = date_input(date_entry)
+    for index, task in enumerate(task_list, 1):
+        if 'due' in task and task[0] != 'x':
+            due_entry = task[-10:]
+            date_find = datetime.strptime(due_entry, "%Y-%m-%d").date()
+            if date_find >= date_one:
+                if str(date_find) in task:
+                    print(f'{index}: {task}')
+
 
 
 task_list = read_list()
