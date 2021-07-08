@@ -73,7 +73,7 @@ def edit_task(task_list): # редактирование задачи по вв�
     note = '- ИЗМЕНЕНО'
     print_task(linenum, task, note)
 
-def date_input(date_entry):
+def date_input(date_entry): # преобразованние введенной даты
     while True:
         try:
             year, month, day = map(int, date_entry.split('-'))
@@ -133,7 +133,7 @@ def print_task(linenum, task, note): # вывод на экран невыпол
             print(f'{index}: {task}')
 
 
-def find_date_between():
+def find_date_between(): # поиск между двумя датами создания
     date_entry = task_description[3]
     date_one = date_input(date_entry)
     date_entry = task_description[4]
@@ -147,7 +147,7 @@ def find_date_between():
                 if str(date_find) in task:
                     print(f'{index}: {task}')
 
-def find_date_before():
+def find_date_before(): #  поиск по дате создания до введенной даты
     date_entry = task_description[3]
     date_one = date_input(date_entry)
     for index, task in enumerate(task_list, 1):
@@ -157,7 +157,7 @@ def find_date_before():
             if date_find <= date_one:
                 print(f'{index}: {task}')
 
-def find_date_after():
+def find_date_after(): #  поиск по дате создания после введенной даты
     date_entry = task_description[3]
     date_one = date_input(date_entry)
     for index, task in enumerate(task_list, 1):
@@ -167,7 +167,7 @@ def find_date_after():
             if date_find >= date_one:
                 print(f'{index}: {task}')
 
-def find_due_between():
+def find_due_between(): # поиск по дате выполнения между указанными датами
     date_entry = task_description[3]
     date_one = date_input(date_entry)
     date_entry = task_description[4]
@@ -180,7 +180,7 @@ def find_due_between():
                 if str(date_find) in task:
                     print(f'{index}: {task}')
 
-def find_due_before():
+def find_due_before(): #  поиск по дате выполнения до указанной даты
     date_entry = task_description[3]
     date_one = date_input(date_entry)
     for index, task in enumerate(task_list, 1):
@@ -191,7 +191,7 @@ def find_due_before():
                 if str(date_find) in task:
                     print(f'{index}: {task}')
 
-def find_due_after():
+def find_due_after(): # поиск по дате выполнения после указанной даты
     date_entry = task_description[3]
     date_one = date_input(date_entry)
     for index, task in enumerate(task_list, 1):
