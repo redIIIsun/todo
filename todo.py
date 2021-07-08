@@ -28,7 +28,7 @@ else:
         read_list()
         edit_task(task_list)
 
-    elif task_description[1] == 'due':
+    elif task_description[1] == 'due' and type(task_description[2]) == int:
         read_list()
         add_due()
 
@@ -57,13 +57,13 @@ else:
         read_list()
         find_date_after()
 
-    elif task_description[1] == 'between' and task_description[2] == 'due':
+    elif task_description[1] == 'due' and task_description[2] == 'between':
         read_list()
         find_due_between()
 
-    elif task_description[1] == 'before' and task_description[2] =='due':
+    elif task_description[1] == 'due' and task_description[2] =='before':
         read_list()
         find_due_before()
-    elif task_description[1] == 'after' and task_description[2] == 'due':
+    elif task_description[1] == 'due' and task_description[2] == 'after':
         read_list()
         find_due_after()
