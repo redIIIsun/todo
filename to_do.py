@@ -26,23 +26,26 @@ def done_task(): # задача по введеному номеру строк�
     linenum = int(task_description[2])
     task = task_list.pop(linenum - 1)  # -1 потому что иначе со второй строки читает
     print(task)
+    note = '- ЗАВЕРШЕНО'
     task = task.replace(task, 'x ' + task, 1)
     with open('todo.txt', 'w') as m:
         task_list.append(task)
         m.write('\n'.join(task_list))
-    note = '- ЗАВЕРШЕНО'
-    read_alltask(linenum, task, note)
+    print('\nTODO:', '\n_____________________')
+    for index, tasks in enumerate(task_list, 1):
+        if linenum == index:
+            print(f'{index}: {task}' + note, end = '\n')
+        else:
+            if task in tasks:
+                continue
+            print(f'{index}: {tasks} ', end = '\n')
 
-def read_alltask(linenum, task, note): # выводит все задачи в файле
+def read_alltask(): # выводит все задачи в файле
     task_list = read_list()
     all_tasks = sorted(task_list, reverse=False)
     print('\nTODO:', '\n_____________________')
     for index, task in enumerate(all_tasks, 1):
-        if linenum == index:
-            print(f'{linenum}: {task} {note}', end='\n')
-        else:
-            print(f'{index}: {task}')
-
+        print(f'{index}: {task} ', end='\n')
 
 def remove_task(task_list): # удаление или нет задачи по введеному номеру строки
     linenum = int(task_description[2])
@@ -131,7 +134,6 @@ def print_task(linenum, task, note): # вывод на экран невыпол
             if 'x' in task[0] :
                 continue
             print(f'{index}: {task}')
-
 
 def find_date_between(): # поиск между двумя датами создания
     date_entry = task_description[3]
