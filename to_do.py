@@ -3,17 +3,18 @@ from datetime import datetime, date
 
 task_description = sys.argv
 
-def read_list(): #читает список из файла
-    task_list = []
+
+def read_list():    #   читает список из файла
     with open('todo.txt', 'r') as m:
         task_list = m.read().splitlines()
         for line in m:
             task_list = line.strip('')
         return task_list
 
-def add_task(): # ввод задачи в файл
-    with open('todo.txt', 'a') as m: #, encoding='utf-8'
-        today = date.today().strftime('%Y-%m-%d') #запись в виде строки
+
+def add_task():    # ввод задачи в файл
+    with open('todo.txt', 'a') as m:     #  encoding='utf-8'
+        today = date.today().strftime('%Y-%m-%d')   # запись в виде строки
         task = ' '.join(task_description[1:])
         task = task[4:]
         m.write(f'{today} {task.capitalize()} \n')
@@ -22,7 +23,8 @@ def add_task(): # ввод задачи в файл
         note = '- ДОБАВЛЕННО'
     print_task(linenum, task, note)
 
-def done_task(): # задача по введеному номеру строки завершена
+
+def done_task():     # задача по введеному номеру строки завершена
     linenum = int(task_description[2])
     task = task_list.pop(linenum - 1)  # -1 потому что иначе со второй строки читает
     print(task)
@@ -40,14 +42,16 @@ def done_task(): # задача по введеному номеру строк�
                 continue
             print(f'{index}: {tasks} ', end = '\n')
 
-def read_alltask(): # выводит все задачи в файле
+
+def read_all_task():   # выводит все задачи в файле
     task_list = read_list()
     all_tasks = sorted(task_list, reverse=False)
     print('\nTODO:', '\n_____________________')
     for index, task in enumerate(all_tasks, 1):
         print(f'{index}: {task} ', end='\n')
 
-def remove_task(task_list): # удаление или нет задачи по введеному номеру строки
+
+def remove_task(task_list):   # удаление или нет задачи по введеному номеру строки
     linenum = int(task_description[2])
     task = task_list[linenum-1]
     print(f'{linenum}:{task}')
@@ -60,23 +64,24 @@ def remove_task(task_list): # удаление или нет задачи по �
         print('ЗАДАЧА НЕ УДАЛЕНА')
     with open('todo.txt', 'w') as m:
         m.write('\n'.join(task_list))
+
     
-def edit_task(task_list): # редактирование задачи по введеному номеру строки
+def edit_task(task_list):   # редактирование задачи по введеному номеру строки
     linenum = int(task_description[2])
-    task = task_list[linenum - 1] # поиск по вхождению в список
+    task = task_list[linenum - 1]  # поиск по вхождению в список
     date_start = task[:11]
-    variable_str = task[11:] # срез строки что б без даты
+    variable_str = task[11:]   # срез строки без даты
     new_str = ' '.join(task_description[3:])
     # variable_str = task.replace(variable_str, new_str, 1)
     with open('todo.txt', 'w') as m:
         task_list[linenum - 1] = (f'{date_start}{new_str}')
 
-        m.write('\n'.join(task_list)) # добавить вывод печати файла
-        # print('\n'.join(task_list))
+        m.write('\n'.join(task_list))   # добавить вывод печати файла
     note = '- ИЗМЕНЕНО'
     print_task(linenum, task, note)
 
-def date_input(date_entry): # преобразованние введенной даты
+
+def date_input(date_entry):   # преобразованние введенной даты
     while True:
         try:
             year, month, day = map(int, date_entry.split('-'))
@@ -86,7 +91,8 @@ def date_input(date_entry): # преобразованние введенной 
             print('Внимание!!!! введите дату через - ','\n')
             date_entry = input('Введите дату в формате YYYY-MM-DD : ', )
 
-def add_due(): # добавить дату окончания к задаче по номеру строки
+
+def add_due():   # добавить дату окончания к задаче по номеру строки
     linenum = int(task_description[2])
     task = task_list[linenum - 1]
     print(task)
@@ -99,32 +105,36 @@ def add_due(): # добавить дату окончания к задаче п
     note = '- ИЗМЕНЕН СРОК'
     print_task(linenum, task, note)
 
+
 def undo_task(): # снять отметку о выполнении в задаче по номеру
     linenum = int(task_description[2])
     task = task_list[linenum - 1]
     if 'x ' in task:
-        new_str = task.replace('x','',1)
-        print(new_str)
+        newstr = task.replace('x','',1)
+        print(newstr)
     with open('todo.txt', 'w') as m:
-        task_list[linenum - 1] = f'{new_str[1:]}'
+        task_list[linenum - 1] = f'{newstr[1:]}'
         m.write('\n'.join(task_list))
     note = 'ВОССТАНОВЛЕНО'
     print_task(linenum, task, note)
 
-def search_task(): # поиск задачи по ключевому слову
+
+def search_task():   # поиск задачи по ключевому слову
     task = task_description[2]
     for index, tasks in enumerate(task_list, 1):
         if task in tasks:
             print(f'{index}: {tasks}')
 
-def un_finished_task(): # чтение всех невыполненых заданий
+
+def read_unfinished_task():  # чтение всех невыполненых заданий
     print('\nTODO:', '\n_____________________')
     for index, task in enumerate(read_list(), 1):
         all_tasks = f'{index}: {task}'
         if 'x' not in task[0]:
             print(all_tasks)
+
             
-def print_task(linenum, task, note): # вывод на экран невыполненых задач с пояснением к изменению
+def print_task(linenum, task, note):  # вывод на экран невыполненых задач с пояснением к изменению
     task_list = read_list()
     print('\nTODO:', '\n_____________________')
     for index, task in enumerate(task_list, 1):
@@ -135,7 +145,8 @@ def print_task(linenum, task, note): # вывод на экран невыпол
                 continue
             print(f'{index}: {task}')
 
-def find_date_between(): # поиск между двумя датами создания
+
+def find_date_between():   # поиск между двумя датами создания
     date_entry = task_description[3]
     date_one = date_input(date_entry)
     date_entry = task_description[4]
@@ -144,12 +155,12 @@ def find_date_between(): # поиск между двумя датами соз�
         if task[0:10] in task and task[0] != 'x':
             date_entry = task[0:10]
             date_find = datetime.strptime(date_entry, "%Y-%m-%d").date()
-            if date_find >= date_one and date_find <= date_two:
-                # for index, task in enumerate(all_tasks, 1):
+            if date_one <= date_find <= date_two:
                 if str(date_find) in task:
                     print(f'{index}: {task}')
 
-def find_date_before(): #  поиск по дате создания до введенной даты
+
+def find_date_before():  #   поиск по дате создания до введенной даты
     date_entry = task_description[3]
     date_one = date_input(date_entry)
     for index, task in enumerate(task_list, 1):
@@ -159,7 +170,8 @@ def find_date_before(): #  поиск по дате создания до вве
             if date_find <= date_one:
                 print(f'{index}: {task}')
 
-def find_date_after(): #  поиск по дате создания после введенной даты
+
+def find_date_after():  #  поиск по дате создания после введенной даты
     date_entry = task_description[3]
     date_one = date_input(date_entry)
     for index, task in enumerate(task_list, 1):
@@ -168,6 +180,7 @@ def find_date_after(): #  поиск по дате создания после �
             date_find = datetime.strptime(date_entry, "%Y-%m-%d").date()
             if date_find >= date_one:
                 print(f'{index}: {task}')
+
 
 def find_due_between(): # поиск по дате выполнения между указанными датами
     date_entry = task_description[3]
@@ -178,9 +191,10 @@ def find_due_between(): # поиск по дате выполнения межд
         if 'due' in task and task[0] != 'x':
             due_entry = task[-10:]
             date_find = datetime.strptime(due_entry, "%Y-%m-%d").date()
-            if date_find >= date_one and date_find <= date_two:
+            if date_one <= date_find <= date_two:
                 if str(date_find) in task:
                     print(f'{index}: {task}')
+
 
 def find_due_before(): #  поиск по дате выполнения до указанной даты
     date_entry = task_description[3]
@@ -192,6 +206,7 @@ def find_due_before(): #  поиск по дате выполнения до у�
             if date_find <= date_one:
                 if str(date_find) in task:
                     print(f'{index}: {task}')
+
 
 def find_due_after(): # поиск по дате выполнения после указанной даты
     date_entry = task_description[3]

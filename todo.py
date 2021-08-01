@@ -1,16 +1,18 @@
 import sys
-# from datetime import datetime, date
+coding:  utf-8
 
-from to_do import add_task, read_alltask, read_list,\
+
+from to_do import add_task, read_all_task, read_list, \
     done_task, task_list, remove_task, edit_task, add_due,\
-    undo_task, search_task, un_finished_task, find_date_between, find_date_before,\
+    undo_task, search_task, read_unfinished_task, find_date_between, find_date_before,\
     find_date_after, find_due_between, find_due_before, find_due_after
 
 
 task_description = sys.argv
 
+
 if len(task_description) == 1:
-    un_finished_task()
+    read_unfinished_task()
 
 else:
     if task_description[1] == 'add':
@@ -18,7 +20,7 @@ else:
         add_task()
 
     elif task_description[1] == 'all':
-        read_alltask()
+        read_all_task()
 
     elif task_description[1] == 'remove':
         read_list()
@@ -43,7 +45,6 @@ else:
     elif task_description[1] == 'search':
         read_list()
         search_task()
-
 
     elif task_description[1] == 'created' and task_description[2] == 'between':
         read_list()
